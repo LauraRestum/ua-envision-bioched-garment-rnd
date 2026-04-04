@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UA × Envision — Bio/Chem Garment R&D Experience</title>
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── Design tokens ── */
+    :root {
+      --navy:    #0B1F2A;
+      --white:   #FFFFFF;
+      --muted:   #7A96A5;
+      --accent:  #78BE21;
+      --surface: rgba(255,255,255,0.04);
+      --border:  rgba(255,255,255,0.08);
+    }
+
+    /* ── Base ── */
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--navy);
+      color: var(--white);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* ── Global background fabric texture ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('images/bg-texture.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      opacity: 0.10;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ══════════════════════════════════════
+       Animation keyframes
+    ══════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50%       { transform: translateY(-10px) rotate(0.4deg); }
+    }
+    @keyframes revealDown {
+      from { clip-path: inset(0 0 100% 0); }
+      to   { clip-path: inset(0 0 0% 0); }
+    }
+    @keyframes s3ImgIn {
+      from { opacity: 0; transform: translateX(-12px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ══════════════════════════════════════
+       Slide base
+    ══════════════════════════════════════ */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      padding: 80px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+      z-index: 1;
+    }
+    .slide.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    /* ══════════════════════════════════════
+       Shared typography
+    ══════════════════════════════════════ */
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+    .body-text {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 480px;
+    }
+    .body-text + .body-text { margin-top: 14px; }
+
+    /* Accent line — 2px tall, 48px wide, green */
+    .accent-line {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    /* ══════════════════════════════════════
+       Progress bar — fixed bottom, 2px green
+    ══════════════════════════════════════ */
+    #progress-fill {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.4s ease-out;
+      z-index: 200;
+    }
+
+    /* ══════════════════════════════════════
+       Navigation buttons — fixed bottom-right
+    ══════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      bottom: 40px;
+      right: 80px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 100;
+    }
+    .nav button {
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--white);
+      letter-spacing: 0.5px;
+      font-family: inherit;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .nav button:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: rgba(120, 190, 33, 0.08);
+    }
+    .nav button:disabled { opacity: 0.2; cursor: default; }
+    .nav button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0B1F2A;
+    }
+    .nav button.primary:hover:not(:disabled) {
+      background: #8fd42a;
+      border-color: #8fd42a;
+    }
+
+    /* ══════════════════════════════════════
+       Side dots — fixed right edge, vertically centered
+    ══════════════════════════════════════ */
+    .dots {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .dot.active {
+      background: var(--accent);
+      transform: scale(1.4);
+    }
+
+    /* ══════════════════════════════════════
+       S1 — Hero
+       Layout: flex row, text left, image right
+    ══════════════════════════════════════ */
+    #s1 {
+      flex-direction: row;
+      gap: 80px;
+    }
+    #s1 .text-block {
+      flex: 1;
+      min-width: 0;
+    }
+    #s1 .image-block {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Hero jacket image */
+    .jacket-hero {
+      max-height: 70vh;
+      object-fit: contain;
+      display: block;
+      opacity: 0;
+    }
+    /* Float animation — applied via JS after enter animations complete */
+    .jacket-float {
+      animation: float 6s ease-in-out infinite !important;
+      opacity: 1 !important;
+    }
+
+    /* S1 child elements start invisible; .entered fires animations */
+    #s1 .eyebrow     { opacity: 0; }
+    #s1 .accent-line { opacity: 0; }
+    #s1 h1           { opacity: 0; }
+    #s1 .body-text   { opacity: 0; }
+
+    #s1.entered .eyebrow {
+      animation: fadeUp 0.4s ease-out 0s forwards;
+    }
+    #s1.entered .accent-line {
+      animation: fadeUp 0.4s ease-out 0.02s forwards;
+    }
+    #s1.entered h1 {
+      animation: fadeUp 0.45s ease-out 0.05s forwards;
+    }
+    #s1.entered .body-text {
+      animation: fadeUp 0.45s ease-out 0.1s forwards;
+    }
+    /* Jacket fades in on entered, float starts after via JS */
+    #s1.entered .jacket-hero:not(.jacket-float) {
+      animation: fadeIn 0.5s ease-out 0.05s forwards;
+    }
+
+    /* ══════════════════════════════════════
+       S2 — Material System
+       Layout: full-bleed image left 55%, text right 45%
+    ══════════════════════════════════════ */
+    #s2 {
+      padding: 0;
+      gap: 0;
+      align-items: stretch;
+    }
+    #s2 .image-col {
+      flex: 0 0 55%;
+      position: relative;
+      overflow: hidden;
+      min-height: 0;
+    }
+    .material-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      /* clip-path reveal animation starts hidden */
+      clip-path: inset(0 0 100% 0);
+    }
+    #s2.entered .material-img {
+      animation: revealDown 0.6s ease-out 0s forwards;
+    }
+    #s2 .text-col {
+      flex: 0 0 45%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 80px 80px 60px;
+    }
+
+    /* Material layer list */
+    .material-layers {
+      display: flex;
+      flex-direction: column;
+      margin-top: 28px;
+    }
+    .layer-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.55;
+      opacity: 0;
+    }
+    .layer-item:first-child { border-top: 1px solid var(--border); }
+    .layer-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* S2 child animations */
+    #s2 .eyebrow { opacity: 0; }
+    #s2 h1       { opacity: 0; }
+
+    #s2.entered .eyebrow {
+      animation: fadeUp 0.4s ease-out 0s forwards;
+    }
+    #s2.entered h1 {
+      animation: fadeUp 0.45s ease-out 0.05s forwards;
+    }
+    #s2.entered .layer-item:nth-child(1) {
+      animation: fadeUp 0.45s ease-out 0.15s forwards;
+    }
+    #s2.entered .layer-item:nth-child(2) {
+      animation: fadeUp 0.45s ease-out 0.25s forwards;
+    }
+    #s2.entered .layer-item:nth-child(3) {
+      animation: fadeUp 0.45s ease-out 0.35s forwards;
+    }
+
+    /* ══════════════════════════════════════
+       S3 — Construction
+       Layout: image left 40%, text right
+    ══════════════════════════════════════ */
+    #s3 {
+      padding: 0;
+      gap: 0;
+      align-items: center;
+    }
+    #s3 .image-col {
+      flex: 0 0 40%;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .construction-img {
+      width: 100%;
+      height: 80vh;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+    #s3.entered .construction-img {
+      animation: s3ImgIn 0.5s ease-out 0s forwards;
+    }
+    #s3 .text-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 80px 80px 60px;
+    }
+
+    /* Feature callouts */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: 28px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 15px;
+      color: var(--muted);
+      opacity: 0;
+    }
+    .feature-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+      flex-shrink: 0;
+      padding-top: 1px;
+      width: 24px;
+    }
+
+    /* S3 child animations */
+    #s3 .eyebrow { opacity: 0; }
+    #s3 h1       { opacity: 0; }
+
+    #s3.entered .eyebrow {
+      animation: fadeUp 0.4s ease-out 0s forwards;
+    }
+    #s3.entered h1 {
+      animation: fadeUp 0.45s ease-out 0.05s forwards;
+    }
+    #s3.entered .feature-item:nth-child(1) {
+      animation: fadeUp 0.45s ease-out 0.1s forwards;
+    }
+    #s3.entered .feature-item:nth-child(2) {
+      animation: fadeUp 0.45s ease-out 0.2s forwards;
+    }
+    #s3.entered .feature-item:nth-child(3) {
+      animation: fadeUp 0.45s ease-out 0.3s forwards;
+    }
+    #s3.entered .feature-item:nth-child(4) {
+      animation: fadeUp 0.45s ease-out 0.4s forwards;
+    }
+
+    /* ══════════════════════════════════════
+       S4 — Performance Zones
+       Layout: two-column — image left, text right
+    ══════════════════════════════════════ */
+    #s4 {
+      flex-direction: row;
+      gap: 80px;
+    }
+    #s4 .image-block {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+    }
+    #s4.entered .image-block {
+      animation: fadeIn 0.5s ease-out 0s forwards;
+    }
+    #s4 .image-block img {
+      max-height: 65vh;
+      object-fit: contain;
+      display: block;
+    }
+    #s4 .text-block {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Zone list — matches index.html zone-list style */
+    .zone-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 420px;
+      margin-top: 28px;
+    }
+    .zone-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      opacity: 0;
+    }
+    .zone-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .zone-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 3px;
+    }
+    .zone-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* S4 child animations */
+    #s4 .eyebrow { opacity: 0; }
+    #s4 h1       { opacity: 0; }
+
+    #s4.entered .eyebrow {
+      animation: fadeUp 0.4s ease-out 0s forwards;
+    }
+    #s4.entered h1 {
+      animation: fadeUp 0.45s ease-out 0.05s forwards;
+    }
+    #s4.entered .zone-item:nth-child(1) {
+      animation: fadeUp 0.45s ease-out 0.15s forwards;
+    }
+    #s4.entered .zone-item:nth-child(2) {
+      animation: fadeUp 0.45s ease-out 0.3s forwards;
+    }
+    #s4.entered .zone-item:nth-child(3) {
+      animation: fadeUp 0.45s ease-out 0.45s forwards;
+    }
+    #s4.entered .zone-item:nth-child(4) {
+      animation: fadeUp 0.45s ease-out 0.6s forwards;
+    }
+
+    /* ══════════════════════════════════════
+       S5 — Infrastructure
+       Layout: full-bleed bg image + centered text
+    ══════════════════════════════════════ */
+    #s5 {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    /* Full-bleed bg image — behind text at low opacity */
+    .s5-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/cutter.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.2;
+      filter: blur(2px);
+      z-index: 0;
+    }
+    /* Text content — above bg */
+    .s5-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 680px;
+    }
+    #s5 h1       { text-align: center; }
+    #s5 .body-text { text-align: center; max-width: 560px; }
+
+    /* S5 child animations */
+    #s5 .eyebrow   { opacity: 0; }
+    #s5 h1         { opacity: 0; }
+    #s5 .body-text { opacity: 0; }
+
+    #s5.entered .eyebrow {
+      animation: fadeUp 0.4s ease-out 0s forwards;
+    }
+    #s5.entered h1 {
+      animation: fadeUp 0.45s ease-out 0.05s forwards;
+    }
+    #s5.entered .body-text:nth-of-type(1) {
+      animation: fadeUp 0.45s ease-out 0.15s forwards;
+    }
+    #s5.entered .body-text:nth-of-type(2) {
+      animation: fadeUp 0.45s ease-out 0.25s forwards;
+    }
+
+    /* ══════════════════════════════════════
+       S6 — CTA
+       Layout: centered, minimal
+    ══════════════════════════════════════ */
+    #s6 {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    /* Small faded jacket image at top */
+    .s6-jacket {
+      max-height: 30vh;
+      object-fit: contain;
+      display: block;
+      margin-bottom: 36px;
+      opacity: 0;
+    }
+    #s6.entered .s6-jacket {
+      animation: fadeIn 0.5s ease-out 0s forwards;
+      /* After fadeIn, hold at 0.4 opacity via filter not opacity */
+    }
+    .s6-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 580px;
+    }
+    #s6 h1       { text-align: center; }
+    #s6 .body-text { text-align: center; max-width: 440px; }
+
+    /* Action list — matches index.html action-list style */
+    .action-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 440px;
+      margin-top: 28px;
+    }
+    .action-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      text-align: left;
+    }
+    .action-item:first-child { border-top: 1px solid var(--border); }
+    .action-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+      width: 20px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+    .action-text {
+      font-size: 15px;
+      color: var(--white);
+      line-height: 1.55;
+    }
+
+    /* CTA button — accent bg, navy text, no border-radius */
+    .cta-btn {
+      display: inline-block;
+      margin-top: 36px;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #0B1F2A;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: background 0.2s;
+      opacity: 0;
+    }
+    .cta-btn:hover { background: #8fd42a; }
+
+    /* S6 child animations */
+    #s6 .eyebrow   { opacity: 0; }
+    #s6 h1         { opacity: 0; }
+    #s6 .body-text { opacity: 0; }
+
+    #s6.entered .eyebrow {
+      animation: fadeUp 0.4s ease-out 0s forwards;
+    }
+    #s6.entered h1 {
+      animation: fadeUp 0.45s ease-out 0.05s forwards;
+    }
+    #s6.entered .body-text {
+      animation: fadeUp 0.45s ease-out 0.1s forwards;
+    }
+    #s6.entered .action-item:nth-child(1) {
+      animation: fadeUp 0.45s ease-out 0.2s forwards;
+    }
+    #s6.entered .action-item:nth-child(2) {
+      animation: fadeUp 0.45s ease-out 0.3s forwards;
+    }
+    #s6.entered .action-item:nth-child(3) {
+      animation: fadeUp 0.45s ease-out 0.4s forwards;
+    }
+    #s6.entered .cta-btn {
+      animation: fadeUp 0.45s ease-out 0.5s forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       S1 — Hero
+       Text left / jacket image right
+  ══════════════════════════════════════ -->
+  <div class="slide" id="s1">
+    <!-- Text block — left column -->
+    <div class="text-block">
+      <div class="eyebrow">UA × Envision × DEVCOM</div>
+      <div class="accent-line"></div>
+      <h1>Material innovation<br>stalls at integration.</h1>
+      <p class="body-text">A modular bio/chemical protective outerwear system, built for deployable performance.</p>
+    </div>
+    <!-- Image block — right column -->
+    <div class="image-block">
+      <img src="images/hero-jacket.jpg" class="jacket-hero" alt="Bio/Chem Protective Jacket">
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       S2 — Material System
+       Full-bleed image left 55% / text right 45%
+  ══════════════════════════════════════ -->
+  <div class="slide" id="s2">
+    <!-- Image column — full-bleed left -->
+    <div class="image-col">
+      <img src="images/material-layers.jpg" class="material-img" alt="Material layers cross-section">
+    </div>
+    <!-- Text column — right -->
+    <div class="text-col">
+      <div class="eyebrow">What it's made of</div>
+      <h1>Three layers.<br>One system.</h1>
+      <div class="material-layers">
+        <div class="layer-item">
+          <div class="layer-dot"></div>
+          <span>Protective outer shell — primary barrier against bio/chem agents</span>
+        </div>
+        <div class="layer-item">
+          <div class="layer-dot"></div>
+          <span>Thermal regulation layer — manages heat load without compromising protection</span>
+        </div>
+        <div class="layer-item">
+          <div class="layer-dot"></div>
+          <span>Multi-layer construction — engineered for integration, not assembly</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       S3 — Construction
+       Image left 40% / text right
+  ══════════════════════════════════════ -->
+  <div class="slide" id="s3">
+    <!-- Image column — left 40% -->
+    <div class="image-col">
+      <img src="images/construction.jpg" class="construction-img" alt="Construction and integration detail">
+    </div>
+    <!-- Text column — right -->
+    <div class="text-col">
+      <div class="eyebrow">How it's built</div>
+      <h1>Integration<br>is the product.</h1>
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="feature-num">01</span>
+          <span>Rapid cut-and-sew prototyping</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">02</span>
+          <span>Multi-panel system integration</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">03</span>
+          <span>Zone-specific material selection</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">04</span>
+          <span>Small-batch pilot manufacturing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       S4 — Performance Zones
+       Two-column: image left / zone list right
+  ══════════════════════════════════════ -->
+  <div class="slide" id="s4">
+    <!-- Jacket image — left column -->
+    <div class="image-block">
+      <img src="images/hero-jacket.jpg" alt="Performance zones — annotated jacket">
+    </div>
+    <!-- Zone text — right column -->
+    <div class="text-block">
+      <div class="eyebrow">How it performs</div>
+      <h1>Every zone<br>is functional.</h1>
+      <div class="zone-list">
+        <div class="zone-item">
+          <div class="zone-dot"></div>
+          <div>
+            <div class="zone-name">Protective Outer Shell</div>
+            <div class="zone-desc">Primary barrier against bio/chem agents at all seams and closures</div>
+          </div>
+        </div>
+        <div class="zone-item">
+          <div class="zone-dot"></div>
+          <div>
+            <div class="zone-name">Thermal Regulation Layer</div>
+            <div class="zone-desc">Manages heat load without compromising protection or mobility</div>
+          </div>
+        </div>
+        <div class="zone-item">
+          <div class="zone-dot"></div>
+          <div>
+            <div class="zone-name">Antimicrobial Treatment Zones</div>
+            <div class="zone-desc">Targeted application at high-contact and high-risk surface areas</div>
+          </div>
+        </div>
+        <div class="zone-item">
+          <div class="zone-dot"></div>
+          <div>
+            <div class="zone-name">Mobility / Flex Zones</div>
+            <div class="zone-desc">Articulated panels engineered for operational range of motion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       S5 — Infrastructure
+       Full-bleed blurred bg + centered text overlay
+  ══════════════════════════════════════ -->
+  <div class="slide" id="s5">
+    <!-- Background image — behind text, low opacity + blur -->
+    <div class="s5-bg"></div>
+    <!-- Centered text content — above bg -->
+    <div class="s5-content">
+      <div class="eyebrow">Why trust it</div>
+      <h1>Precision manufacturing.<br>Repeatable results.</h1>
+      <p class="body-text">Envision's rapid prototyping capability compresses development cycles from months to weeks.</p>
+      <p class="body-text">Small-batch pilot manufacturing with full system integration — ready for DEVCOM evaluation.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       S6 — CTA
+       Centered, minimal
+  ══════════════════════════════════════ -->
+  <div class="slide" id="s6">
+    <!-- Small faded jacket image — decorative top -->
+    <img src="images/hero-jacket.jpg" class="s6-jacket" alt="" aria-hidden="true">
+    <!-- Centered content block -->
+    <div class="s6-content">
+      <div class="eyebrow">What now</div>
+      <h1>Define the pilot.<br>Align on OTA entry.</h1>
+      <p class="body-text">Three decisions to move from concept to funded prototype.</p>
+      <div class="action-list">
+        <div class="action-item">
+          <span class="action-num">01</span>
+          <span class="action-text">Confirm material stack and protection tier for pilot unit</span>
+        </div>
+        <div class="action-item">
+          <span class="action-num">02</span>
+          <span class="action-text">Define pilot quantity and timeline for DEVCOM evaluation submission</span>
+        </div>
+        <div class="action-item">
+          <span class="action-num">03</span>
+          <span class="action-text">Align on OTA vehicle and contracting path to move into funded prototype</span>
+        </div>
+      </div>
+      <button class="cta-btn">Begin the process</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       Navigation — fixed bottom-right
+  ══════════════════════════════════════ -->
+  <nav class="nav" role="navigation" aria-label="Slide navigation">
+    <button id="btn-back" onclick="navigate(-1)" aria-label="Previous slide">← Back</button>
+    <button id="btn-next" onclick="navigate(1)" aria-label="Next slide">Next →</button>
+  </nav>
+
+  <!-- Side dots — fixed right edge -->
+  <div class="dots" role="navigation" aria-label="Slide indicators">
+    <div class="dot" onclick="goTo(1)" aria-label="Go to slide 1"></div>
+    <div class="dot" onclick="goTo(2)" aria-label="Go to slide 2"></div>
+    <div class="dot" onclick="goTo(3)" aria-label="Go to slide 3"></div>
+    <div class="dot" onclick="goTo(4)" aria-label="Go to slide 4"></div>
+    <div class="dot" onclick="goTo(5)" aria-label="Go to slide 5"></div>
+    <div class="dot" onclick="goTo(6)" aria-label="Go to slide 6"></div>
+  </div>
+
+  <!-- Progress bar — fixed bottom -->
+  <div id="progress-fill"></div>
+
+  <script>
+    // ── Navigation state ──
+    let current = 1;
+    const total = 6;
+
+    // Activate a slide (internal — call after current has been updated)
+    function activateSlide(n) {
+      const el = document.getElementById('s' + n);
+      el.classList.add('active');
+
+      // Double rAF: let the .active transition settle before triggering child animations
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.classList.add('entered');
+
+        // S1: start float after enter animations complete (~550ms)
+        if (n === 1) {
+          const jacket = el.querySelector('.jacket-hero');
+          if (jacket) {
+            setTimeout(() => jacket.classList.add('jacket-float'), 550);
+          }
+        }
+
+        // S6: set jacket to 40% opacity after fadeIn animation completes
+        if (n === 6) {
+          const s6Jacket = el.querySelector('.s6-jacket');
+          if (s6Jacket) {
+            setTimeout(() => { s6Jacket.style.opacity = '0.4'; }, 520);
+          }
+        }
+      }));
+    }
+
+    // Deactivate the current slide
+    function deactivateSlide(n) {
+      const el = document.getElementById('s' + n);
+      el.classList.remove('active', 'entered');
+
+      // Remove float from S1 jacket
+      const jacket = el.querySelector('.jacket-hero');
+      if (jacket) jacket.classList.remove('jacket-float');
+
+      // Reset S6 jacket opacity
+      const s6Jacket = el.querySelector('.s6-jacket');
+      if (s6Jacket) s6Jacket.style.opacity = '';
+    }
+
+    // Navigate by delta (+1 forward, -1 back)
+    function navigate(dir) {
+      deactivateSlide(current);
+      current = Math.max(1, Math.min(total, current + dir));
+      activateSlide(current);
+      updateNav();
+    }
+
+    // Navigate directly to a numbered slide
+    function goTo(n) {
+      if (n === current) return;
+      deactivateSlide(current);
+      current = n;
+      activateSlide(current);
+      updateNav();
+    }
+
+    // Sync nav UI: buttons, progress bar, dots
+    function updateNav() {
+      document.getElementById('btn-back').disabled = current === 1;
+      document.getElementById('btn-next').disabled = current === total;
+      document.getElementById('btn-next').classList.toggle('primary', current < total);
+      document.getElementById('progress-fill').style.width = `calc(100% * ${current} / ${total})`;
+      document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i + 1 === current));
+    }
+
+    // Keyboard navigation: ArrowRight/ArrowDown/Space = next; ArrowLeft/ArrowUp = back
+    document.addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) {
+        e.preventDefault();
+        if (current < total) navigate(1);
+      }
+      if (['ArrowLeft', 'ArrowUp'].includes(e.key)) {
+        e.preventDefault();
+        if (current > 1) navigate(-1);
+      }
+    });
+
+    // ── Init: activate S1 on load ──
+    document.getElementById('s1').classList.add('active');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.getElementById('s1').classList.add('entered');
+      const jacket = document.querySelector('#s1 .jacket-hero');
+      if (jacket) {
+        setTimeout(() => jacket.classList.add('jacket-float'), 550);
+      }
+    }));
+    updateNav();
+  </script>
+</body>
+</html>
