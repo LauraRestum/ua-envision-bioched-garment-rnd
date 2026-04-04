@@ -18,9 +18,11 @@ The model works because no single party can do all three. UA does not own the pr
 
 ## Use Case
 
-Next-generation bio/chemical protective garment.
+**Modular bio/chemical protective outerwear system** — designed to balance barrier protection, thermal regulation, antimicrobial performance, and mobility through integrated multi-layer construction.
 
-The anchor problem: bio/chem protection currently requires tradeoffs between protection level, mobility, and thermal load. No current system resolves all three without significant iteration time and manufacturing gaps.
+**Current stage:** Pre-prototype / integration-ready. Material innovation exists. The gap is rapid integration into a functional, testable garment system.
+
+The anchor problem: bio/chem protection currently requires tradeoffs between protection level, mobility, and thermal load. No current system resolves all three without significant iteration time and manufacturing gaps. This model is designed to close that gap.
 
 ## Goal
 

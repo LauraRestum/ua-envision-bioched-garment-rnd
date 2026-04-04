@@ -51,9 +51,15 @@ Goal: make the handoffs clear. UA → Envision → Government is not just a flow
 
 Anchor the concept to a specific application.
 
-Goal: make this concrete. Not "protective garments" in the abstract — a specific system solving a specific tradeoff problem.
+Goal: make this concrete. A specific system solving a specific tradeoff problem — not a category of garment, but a defined object that needs to be built.
 
-> [Garment concept to be defined — see Open Questions]
+**Anchor concept:**
+> A modular bio/chemical protective outerwear system designed to balance barrier protection, thermal regulation, antimicrobial performance, and mobility through integrated multi-layer construction.
+
+**Current stage:**
+> Pre-prototype / integration-ready. Material innovation exists. What's missing is rapid integration into a functional, testable garment system — that's what this model delivers.
+
+The Use Case section should make clear: this isn't hypothetical. The materials exist. The gap is integration and speed.
 
 ---
 
@@ -61,7 +67,12 @@ Goal: make this concrete. Not "protective garments" in the abstract — a specif
 
 Walk through the execution sequence.
 
-Goal: show that this is fundable and executable, not theoretical. The pathway exists. OTA is the entry point. Prototype is the deliverable. Evaluation leads to scale.
+Goal: show that this is fundable and executable, not theoretical. The pathway exists. OTA is the entry point because the concept is at pre-prototype stage — exactly what OTA is designed to fund.
+
+- **OTA entry:** concept is integration-ready, not raw research — fits OTA's prototype mandate
+- **Prototype:** Envision builds functional garment system using UA materials
+- **Evaluation:** DEVCOM evaluates against defined performance requirements
+- **Scale:** pilot manufacturing pathway already exists through Envision
 
 ---
 

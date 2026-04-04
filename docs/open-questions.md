@@ -6,19 +6,27 @@ These are unresolved decisions that will shape the direction of the briefing and
 
 ## 1. What specific garment concept are we anchoring on?
 
-The briefing requires a concrete use case — not "bio/chem protective garment" as a category, but a specific system. Examples: a next-generation MOPP suit replacement, an integrated protective base layer, a modular over-garment.
+**RESOLVED**
 
-**Impact:** Drives the Use Case section and makes the entire pitch credible to government evaluators.
+Modular bio/chemical protective outerwear system designed to balance barrier protection, thermal regulation, antimicrobial performance, and mobility through integrated multi-layer construction.
+
+- "Modular" signals a system, not a single product
+- "Outerwear system" is grounded and near-term
+- Naturally supports UA's material role and Envision's integration role
+- Avoids futuristic framing that loses credibility with evaluators
 
 ---
 
 ## 2. What stage is the concept at?
 
-- Early (concept only, no material direction)
-- Mid (materials identified, no prototype)
-- Near-prototype (materials in development, integration path defined)
+**RESOLVED**
 
-**Impact:** Determines what the OTA pitch can promise and how the pathway section is framed.
+Pre-prototype / integration-ready stage. Material innovation exists, but requires rapid prototyping and system-level integration into a functional, testable garment.
+
+- Materials likely exist or are being explored — no fully integrated garment system yet
+- Justifies Envision's role directly
+- Aligns with OTA's prototype-funding mandate
+- Honest framing: "It's real, it just hasn't been built into a system yet"
 
 ---
 
