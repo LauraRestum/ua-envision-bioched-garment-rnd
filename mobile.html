@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>UA × Envision — Bio/Chem Garment R&D</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:    #0B1F2A;
+      --white:   #FFFFFF;
+      --muted:   #7A96A5;
+      --accent:  #78BE21;
+      --surface: rgba(255,255,255,0.04);
+      --border:  rgba(255,255,255,0.08);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--navy);
+      color: var(--white);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Progress bar — top ── */
+    #progress-track {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--border);
+      z-index: 200;
+    }
+    #progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    /* ── Slides ── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 56px 24px 100px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      transform: translateX(20px);
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(0);
+    }
+    .slide.exit-left  { transform: translateX(-20px); }
+    .slide.exit-right { transform: translateX(20px); }
+
+    /* ── Slide meta ── */
+    .slide-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      flex-shrink: 0;
+    }
+    .slide-label {
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 3px;
+      color: var(--accent);
+    }
+    .slide-counter {
+      font-size: 10px; font-weight: 500;
+      color: var(--muted); letter-spacing: 1px;
+    }
+
+    /* ── Typography ── */
+    .eyebrow {
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 3px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 34px; font-weight: 800;
+      line-height: 1.08; letter-spacing: -1px;
+      margin-bottom: 18px;
+      color: var(--white);
+    }
+    .body-text {
+      font-size: 15px; line-height: 1.65;
+      color: var(--muted);
+    }
+    .body-text + .body-text { margin-top: 12px; }
+
+    /* ── Visual block ── */
+    .visual-block {
+      margin-top: 28px;
+      flex-shrink: 0;
+    }
+    .visual-block svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ── Zone list (S4) ── */
+    .zone-list { display: flex; flex-direction: column; gap: 8px; }
+    .zone-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 13px 16px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .zone-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      margin-top: 5px; flex-shrink: 0;
+    }
+    .zone-name { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+    .zone-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+    /* ── Reason list (S6) ── */
+    .reason-list { display: flex; flex-direction: column; }
+    .reason-item { padding: 18px 0; border-bottom: 1px solid var(--border); }
+    .reason-item:first-child { border-top: 1px solid var(--border); }
+    .reason-title {
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--white); margin-bottom: 6px;
+    }
+    .reason-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Action list (S7) ── */
+    .action-list { display: flex; flex-direction: column; }
+    .action-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+    }
+    .action-item:first-child { border-top: 1px solid var(--border); }
+    .action-num {
+      font-size: 10px; font-weight: 700;
+      color: var(--accent); letter-spacing: 1px;
+      flex-shrink: 0; padding-top: 2px;
+    }
+    .action-text { font-size: 14px; color: var(--white); line-height: 1.55; }
+
+    /* ── Navigation ── */
+    .nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      border-top: 1px solid var(--border);
+      background: var(--navy);
+      z-index: 100;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .nav button {
+      flex: 1;
+      padding: 18px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      transition: color 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav button:active:not(:disabled) { background: rgba(255,255,255,0.04); }
+    .nav button:disabled { opacity: 0.2; }
+    .nav button.primary { color: var(--accent); }
+    .nav-divider {
+      width: 1px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    svg text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="progress-track"><div id="progress-fill" style="width:calc(100% * 1/7)"></div></div>
+
+  <!-- ══════════════════════════════════════
+       SLIDE 1 — Opening
+  ══════════════════════════════════════ -->
+  <div class="slide active" id="slide-1">
+    <div class="slide-meta">
+      <span class="slide-label">Opening</span>
+      <span class="slide-counter">01 / 07</span>
+    </div>
+    <div class="eyebrow">UA × Envision × DEVCOM</div>
+    <h1>Material innovation<br>stalls at integration.</h1>
+    <p class="body-text">Under Armour develops the materials. Envision integrates them into functional garment systems. The government funds and evaluates through OTA. That's the model.</p>
+    <div class="visual-block">
+      <!-- Three-party flow — vertical on mobile -->
+      <svg viewBox="0 0 280 300" fill="none">
+        <rect x="40" y="0" width="200" height="60" rx="2"
+              stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
+        <text x="140" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Under Armour</text>
+        <text x="140" y="42" text-anchor="middle" font-size="10" fill="#7A96A5">Material Innovation</text>
+
+        <line x1="140" y1="60" x2="140" y2="88" stroke="#78BE21" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <polygon points="135,88 140,98 145,88" fill="#78BE21"/>
+
+        <rect x="40" y="98" width="200" height="60" rx="2"
+              stroke="#78BE21" stroke-width="1" fill="rgba(120,190,33,0.06)"/>
+        <text x="140" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Envision</text>
+        <text x="140" y="140" text-anchor="middle" font-size="10" fill="#7A96A5">Integration + Prototyping</text>
+
+        <line x1="140" y1="158" x2="140" y2="186" stroke="#78BE21" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <polygon points="135,186 140,196 145,186" fill="#78BE21"/>
+
+        <rect x="40" y="196" width="200" height="60" rx="2"
+              stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
+        <text x="140" y="220" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">DEVCOM</text>
+        <text x="140" y="238" text-anchor="middle" font-size="10" fill="#7A96A5">Funding + Evaluation</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SLIDE 2 — Problem
+  ══════════════════════════════════════ -->
+  <div class="slide" id="slide-2">
+    <div class="slide-meta">
+      <span class="slide-label">Problem</span>
+      <span class="slide-counter">02 / 07</span>
+    </div>
+    <div class="eyebrow">The Bottleneck</div>
+    <h1>The bottleneck is integration,<br>not material innovation.</h1>
+    <p class="body-text">Bio/chem protection requires multi-layer systems. Current development pipelines can't iterate fast enough. Material innovation is ahead of the manufacturing and integration capacity to deploy it.</p>
+    <p class="body-text">The gap between what's possible in the lab and what gets deployed in the field is wide — and closes slowly.</p>
+    <div class="visual-block">
+      <svg viewBox="0 0 300 210" fill="none">
+        <text x="0" y="18" font-size="11" font-weight="600" fill="#FFFFFF">Protection vs. Mobility</text>
+        <rect x="0" y="26" width="300" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+        <rect x="0" y="26" width="168" height="3" rx="1.5" fill="#78BE21"/>
+        <text x="0" y="44" font-size="10" fill="#7A96A5">Higher protection increases weight and restricts movement</text>
+
+        <text x="0" y="78" font-size="11" font-weight="600" fill="#FFFFFF">Iteration Speed</text>
+        <rect x="0" y="86" width="300" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+        <rect x="0" y="86" width="60" height="3" rx="1.5" fill="#78BE21"/>
+        <text x="0" y="104" font-size="10" fill="#7A96A5">Development pipelines are not built for rapid prototyping</text>
+
+        <text x="0" y="138" font-size="11" font-weight="600" fill="#FFFFFF">Material → Deployment Gap</text>
+        <rect x="0" y="146" width="300" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+        <rect x="0" y="146" width="28" height="3" rx="1.5" fill="#78BE21"/>
+        <text x="0" y="164" font-size="10" fill="#7A96A5">Advanced materials exist without a path into a manufacturable system</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SLIDE 3 — Model
+  ══════════════════════════════════════ -->
+  <div class="slide" id="slide-3">
+    <div class="slide-meta">
+      <span class="slide-label">Model</span>
+      <span class="slide-counter">03 / 07</span>
+    </div>
+    <div class="eyebrow">Integrated Roles</div>
+    <h1>An integrated system,<br>not a handoff model.</h1>
+    <p class="body-text">Each party is responsible for what they're structurally equipped to do. UA supplies material R&D. Envision integrates and prototypes. DEVCOM evaluates and funds.</p>
+    <p class="body-text">The system works because the roles don't overlap — and the gaps between them are closed by design.</p>
+    <div class="visual-block">
+      <svg viewBox="0 0 280 330" fill="none">
+        <rect x="40" y="0" width="200" height="76" rx="2"
+              stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
+        <text x="140" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Under Armour</text>
+        <text x="140" y="42" text-anchor="middle" font-size="10" fill="#7A96A5">Thermal regulation · Antimicrobial fabrics</text>
+        <text x="140" y="58" text-anchor="middle" font-size="10" fill="#7A96A5">Performance layering · Wearable integration</text>
+
+        <line x1="140" y1="76" x2="140" y2="108" stroke="#78BE21" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <polygon points="135,108 140,118 145,108" fill="#78BE21"/>
+
+        <rect x="40" y="118" width="200" height="76" rx="2"
+              stroke="#78BE21" stroke-width="1" fill="rgba(120,190,33,0.06)"/>
+        <text x="140" y="142" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Envision</text>
+        <text x="140" y="160" text-anchor="middle" font-size="10" fill="#7A96A5">Rapid prototyping · Garment integration</text>
+        <text x="140" y="176" text-anchor="middle" font-size="10" fill="#7A96A5">Small-batch pilot manufacturing</text>
+
+        <line x1="140" y1="194" x2="140" y2="226" stroke="#78BE21" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <polygon points="135,226 140,236 145,226" fill="#78BE21"/>
+
+        <rect x="40" y="236" width="200" height="76" rx="2"
+              stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
+        <text x="140" y="260" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">DEVCOM</text>
+        <text x="140" y="278" text-anchor="middle" font-size="10" fill="#7A96A5">OTA funding · Performance evaluation</text>
+        <text x="140" y="294" text-anchor="middle" font-size="10" fill="#7A96A5">Scalability + risk assessment</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SLIDE 4 — Use Case
+  ══════════════════════════════════════ -->
+  <div class="slide" id="slide-4">
+    <div class="slide-meta">
+      <span class="slide-label">Use Case</span>
+      <span class="slide-counter">04 / 07</span>
+    </div>
+    <div class="eyebrow">Pre-Prototype · Integration-Ready</div>
+    <h1>Modular bio/chemical<br>protective outerwear system.</h1>
+    <p class="body-text">A layered garment designed to balance barrier protection, thermal regulation, antimicrobial performance, and mobility through integrated multi-layer construction.</p>
+    <p class="body-text">Stage: pre-prototype / integration-ready. The materials exist. What's missing is rapid integration into a functional, testable garment system.</p>
+    <p class="body-text">Built using existing materials, integrated into a unified garment system.</p>
+    <div class="visual-block">
+      <div class="zone-list">
+        <div class="zone-item">
+          <div class="zone-dot"></div>
+          <div>
+            <div class="zone-name">Protective Outer Shell</div>
+            <div class="zone-desc">Primary barrier layer against biological and chemical agents</div>
+          </div>
+        </div>
+        <div class="zone-item">
+          <div class="zone-dot"></div>
+          <div>
+            <div class="zone-name">Thermal Regulation Layer</div>
+            <div class="zone-desc">Manages heat load without compromising protection level</div>
+          </div>
+        </div>
+        <div class="zone-item">
+          <div class="zone-dot"></div>
+          <div>
+            <div class="zone-name">Antimicrobial Treatment Zones</div>
+            <div class="zone-desc">Targeted treatment at high-contact and high-risk areas</div>
+          </div>
+        </div>
+        <div class="zone-item">
+          <div class="zone-dot"></div>
+          <div>
+            <div class="zone-name">Mobility / Flex Zones</div>
+            <div class="zone-desc">Construction engineered for movement without barrier compromise</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SLIDE 5 — Pathway
+  ══════════════════════════════════════ -->
+  <div class="slide" id="slide-5">
+    <div class="slide-meta">
+      <span class="slide-label">Pathway</span>
+      <span class="slide-counter">05 / 07</span>
+    </div>
+    <div class="eyebrow">Execution Sequence</div>
+    <h1>OTA → Prototype →<br>Evaluation → Scale</h1>
+    <p class="body-text">OTA is the fastest viable entry point at this stage.</p>
+    <p class="body-text">The concept is integration-ready — not raw research — which fits OTA's mandate directly. Envision builds the functional garment system. DEVCOM evaluates against defined requirements. Pilot manufacturing follows.</p>
+    <div class="visual-block">
+      <!-- Pathway vertical on mobile -->
+      <svg viewBox="0 0 280 340" fill="none">
+        <rect x="40" y="0" width="200" height="60" rx="2"
+              stroke="#78BE21" stroke-width="1" fill="rgba(120,190,33,0.06)"/>
+        <text x="140" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#78BE21">OTA ENTRY</text>
+        <text x="140" y="40" text-anchor="middle" font-size="10" fill="#7A96A5">Pre-prototype mandate fits</text>
+
+        <line x1="140" y1="60" x2="140" y2="88" stroke="#78BE21" stroke-width="1.5"/>
+        <polygon points="135,88 140,98 145,88" fill="#78BE21"/>
+
+        <rect x="40" y="98" width="200" height="60" rx="2"
+              stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
+        <text x="140" y="122" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">PROTOTYPE</text>
+        <text x="140" y="140" text-anchor="middle" font-size="10" fill="#7A96A5">Envision builds system</text>
+
+        <line x1="140" y1="158" x2="140" y2="186" stroke="#78BE21" stroke-width="1.5"/>
+        <polygon points="135,186 140,196 145,186" fill="#78BE21"/>
+
+        <rect x="40" y="196" width="200" height="60" rx="2"
+              stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
+        <text x="140" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">EVALUATION</text>
+        <text x="140" y="238" text-anchor="middle" font-size="10" fill="#7A96A5">DEVCOM evaluates</text>
+
+        <line x1="140" y1="256" x2="140" y2="284" stroke="#78BE21" stroke-width="1.5"/>
+        <polygon points="135,284 140,294 145,284" fill="#78BE21"/>
+
+        <rect x="40" y="294" width="200" height="46" rx="2"
+              stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
+        <text x="140" y="322" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">SCALE</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SLIDE 6 — Why It Works
+  ══════════════════════════════════════ -->
+  <div class="slide" id="slide-6">
+    <div class="slide-meta">
+      <span class="slide-label">Why It Works</span>
+      <span class="slide-counter">06 / 07</span>
+    </div>
+    <div class="eyebrow">Structural Advantage</div>
+    <h1>Speed. Integration.<br>Risk reduction.</h1>
+    <p class="body-text">This partnership is structurally superior because capability fit and pre-coordination eliminate the delays that come with assembling a team after a contract is awarded.</p>
+    <div class="visual-block">
+      <div class="reason-list">
+        <div class="reason-item">
+          <div class="reason-title">Speed</div>
+          <div class="reason-body">Envision compresses prototype timelines. Rapid cut-and-sew prototyping means iteration cycles are measured in weeks, not quarters.</div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-title">Integration</div>
+          <div class="reason-body">Materials and manufacturing are pre-coordinated. UA's material output feeds directly into Envision's production process — no translation layer required.</div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-title">Risk Reduction</div>
+          <div class="reason-body">The government evaluates one integrated team, not three separate vendors. Defined accountability. Reduced coordination overhead.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SLIDE 7 — Next Step
+  ══════════════════════════════════════ -->
+  <div class="slide" id="slide-7">
+    <div class="slide-meta">
+      <span class="slide-label">Next Step</span>
+      <span class="slide-counter">07 / 07</span>
+    </div>
+    <div class="eyebrow">Path Forward</div>
+    <h1>Define the pilot.<br>Align on OTA entry.</h1>
+    <p class="body-text">Three decisions to move from concept to funded prototype:</p>
+    <div class="visual-block">
+      <div class="action-list">
+        <div class="action-item">
+          <div class="action-num">01</div>
+          <div class="action-text">Define the pilot garment concept — scope, performance requirements, layer system.</div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">02</div>
+          <div class="action-text">Identify the OTA sponsor and confirm program alignment with DEVCOM priorities.</div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">03</div>
+          <div class="action-text">Set a prototype timeline with Envision — from material handoff to functional test garment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Navigation ── -->
+  <div class="nav">
+    <button id="btn-back" onclick="navigate(-1)" disabled>← Back</button>
+    <div class="nav-divider"></div>
+    <button id="btn-next" class="primary" onclick="navigate(1)">Next →</button>
+  </div>
+
+  <script>
+    let current = 1;
+    const total = 7;
+
+    function navigate(dir) {
+      const prev = document.getElementById('slide-' + current);
+      current = Math.max(1, Math.min(total, current + dir));
+      const next = document.getElementById('slide-' + current);
+
+      prev.classList.remove('active');
+      next.classList.add('active');
+      next.scrollTop = 0;
+
+      document.getElementById('btn-back').disabled = (current === 1);
+      document.getElementById('btn-next').disabled = (current === total);
+      document.getElementById('btn-next').classList.toggle('primary', current < total);
+      document.getElementById('progress-fill').style.width = 'calc(100% * ' + current + '/' + total + ')';
+    }
+
+    // Touch swipe
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    document.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 48) {
+        if (dx < 0 && current < total) navigate(1);
+        if (dx > 0 && current > 1)     navigate(-1);
+      }
+    }, { passive: true });
+
+    // Keyboard
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) { e.preventDefault(); if (current < total) navigate(1); }
+      if (['ArrowLeft',  'ArrowUp'        ].includes(e.key)) { e.preventDefault(); if (current > 1)     navigate(-1); }
+    });
+  </script>
+
+</body>
+</html>
