@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UA x Envision — Bio/Chem Garment R&D Briefing [WIREFRAME]</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; }
+
+    .slide {
+      width: 100%;
+      height: 100vh;
+      display: none;
+      padding: 60px;
+      border: 2px solid #ccc;
+      position: relative;
+    }
+    .slide.active { display: flex; flex-direction: column; justify-content: center; }
+
+    .slide-label {
+      position: absolute;
+      top: 20px;
+      left: 60px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #999;
+    }
+    .slide-counter {
+      position: absolute;
+      top: 20px;
+      right: 60px;
+      font-size: 11px;
+      color: #999;
+    }
+
+    .slide-content {
+      display: flex;
+      align-items: center;
+      gap: 80px;
+      width: 100%;
+    }
+    .slide-content.reverse { flex-direction: row-reverse; }
+
+    .text-block { flex: 1; }
+    .visual-block {
+      flex: 1;
+      height: 360px;
+      border: 2px dashed #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      color: #888;
+      font-size: 13px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 { font-size: 42px; font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+    p  { font-size: 16px; line-height: 1.6; color: #444; max-width: 480px; }
+    p + p { margin-top: 12px; }
+
+    .nav {
+      position: fixed;
+      bottom: 40px;
+      right: 60px;
+      display: flex;
+      gap: 12px;
+    }
+    .nav button {
+      padding: 10px 24px;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid #333;
+      background: white;
+    }
+    .nav button:disabled { opacity: 0.3; cursor: default; }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1: Opening — The System -->
+  <div class="slide active" id="slide-1">
+    <div class="slide-label">Opening</div>
+    <div class="slide-counter">1 / 7</div>
+    <div class="slide-content">
+      <div class="text-block">
+        <h1>Three parties.<br>One system.</h1>
+        <p>Under Armour develops the materials. Envision integrates them into functional garment systems. The government funds and evaluates through OTA. That's the model.</p>
+      </div>
+      <div class="visual-block">
+        [VISUAL PLACEHOLDER]<br><br>
+        Three-party diagram<br>
+        UA → Envision → DEVCOM<br>
+        with role labels beneath each node
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Problem — The Bottleneck -->
+  <div class="slide" id="slide-2">
+    <div class="slide-label">Problem</div>
+    <div class="slide-counter">2 / 7</div>
+    <div class="slide-content reverse">
+      <div class="text-block">
+        <h1>The bottleneck isn't the materials.</h1>
+        <p>Bio/chem protection requires multi-layer systems. Current development pipelines can't iterate fast enough. Material innovation is ahead of the manufacturing and integration capacity to deploy it.</p>
+        <p>The gap between what's possible in the lab and what gets deployed in the field is wide — and closes slowly.</p>
+      </div>
+      <div class="visual-block">
+        [VISUAL PLACEHOLDER]<br><br>
+        Three-tension diagram<br>
+        Protection vs. Mobility<br>
+        Iteration Speed<br>
+        Material → Deployment gap
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Model — Integrated Roles -->
+  <div class="slide" id="slide-3">
+    <div class="slide-label">Model</div>
+    <div class="slide-counter">3 / 7</div>
+    <div class="slide-content">
+      <div class="text-block">
+        <h1>Each party owns one function.</h1>
+        <p>UA supplies material R&D. Envision takes that output and integrates it into a functional garment system at speed. DEVCOM evaluates and funds.</p>
+        <p>No party is asked to do what another is better positioned to do. That's what makes the handoff work.</p>
+      </div>
+      <div class="visual-block">
+        [VISUAL PLACEHOLDER]<br><br>
+        Role flow diagram<br>
+        UA: Material Innovation<br>
+        ↓<br>
+        Envision: Integration + Prototyping<br>
+        ↓<br>
+        DEVCOM: Evaluation + Funding
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Use Case — Bio/Chem Garment -->
+  <div class="slide" id="slide-4">
+    <div class="slide-label">Use Case</div>
+    <div class="slide-counter">4 / 7</div>
+    <div class="slide-content reverse">
+      <div class="text-block">
+        <h1>Modular bio/chemical protective outerwear system.</h1>
+        <p>A layered garment system designed to balance barrier protection, thermal regulation, antimicrobial performance, and mobility through integrated multi-layer construction.</p>
+        <p>Current stage: pre-prototype / integration-ready. The materials exist. What's missing is rapid integration into a functional, testable system.</p>
+      </div>
+      <div class="visual-block">
+        [VISUAL PLACEHOLDER]<br><br>
+        Garment silhouette<br>
+        with 4–5 labeled callouts:<br>
+        Protective outer shell<br>
+        Thermal regulation layer<br>
+        Antimicrobial treatment zones<br>
+        Mobility/flex zones
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Pathway — OTA → Prototype → Evaluation → Scale -->
+  <div class="slide" id="slide-5">
+    <div class="slide-label">Pathway</div>
+    <div class="slide-counter">5 / 7</div>
+    <div class="slide-content">
+      <div class="text-block">
+        <h1>OTA → Prototype → Evaluation → Scale</h1>
+        <p>Entry through OTA. The concept is integration-ready — not raw research — which fits OTA's prototype mandate directly.</p>
+        <p>Envision builds the functional garment system. DEVCOM evaluates against defined requirements. Pilot manufacturing follows through Envision's existing capability.</p>
+      </div>
+      <div class="visual-block">
+        [VISUAL PLACEHOLDER]<br><br>
+        4-step linear pathway<br>
+        OTA Entry → Prototype Build → DEVCOM Evaluation → Scale<br>
+        with brief descriptor under each step
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Why It Works — Speed, Integration, Risk Reduction -->
+  <div class="slide" id="slide-6">
+    <div class="slide-label">Why It Works</div>
+    <div class="slide-counter">6 / 7</div>
+    <div class="slide-content reverse">
+      <div class="text-block">
+        <h1>Speed. Integration. Risk reduction.</h1>
+        <p>Envision compresses prototype timelines. Materials and manufacturing are pre-coordinated — not assembled after the fact. The government evaluates one integrated team, not three separate vendors.</p>
+        <p>This is structurally superior to the alternative, not just better on paper.</p>
+      </div>
+      <div class="visual-block">
+        [VISUAL PLACEHOLDER]<br><br>
+        Three-column layout<br>
+        Speed | Integration | Risk Reduction<br>
+        one supporting line per column
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Next Step — Define Pilot + Funding Path -->
+  <div class="slide" id="slide-7">
+    <div class="slide-label">Next Step</div>
+    <div class="slide-counter">7 / 7</div>
+    <div class="slide-content">
+      <div class="text-block">
+        <h1>Define the pilot.<br>Secure the path.</h1>
+        <p>Three decisions to move forward:</p>
+        <p>1. Define the pilot garment concept.<br>
+           2. Identify the OTA sponsor.<br>
+           3. Set a prototype timeline.</p>
+      </div>
+      <div class="visual-block">
+        [VISUAL PLACEHOLDER]<br><br>
+        Three-item action block<br>
+        Clean, minimal layout<br>
+        No imagery required
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav">
+    <button id="btn-back" onclick="navigate(-1)" disabled>← Back</button>
+    <button id="btn-next" onclick="navigate(1)">Next →</button>
+  </div>
+
+  <script>
+    let current = 1;
+    const total = 7;
+
+    function navigate(dir) {
+      document.getElementById('slide-' + current).classList.remove('active');
+      current += dir;
+      document.getElementById('slide-' + current).classList.add('active');
+      document.getElementById('btn-back').disabled = current === 1;
+      document.getElementById('btn-next').disabled = current === total;
+    }
+  </script>
+
+</body>
+</html>
