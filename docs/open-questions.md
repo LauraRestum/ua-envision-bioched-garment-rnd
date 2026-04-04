@@ -32,26 +32,48 @@ Pre-prototype / integration-ready stage. Material innovation exists, but require
 
 ## 3. Which funding pathway is most realistic for first entry?
 
-OTA is the stated primary — but is there an existing DEVCOM relationship, AFFOA connection, or SBIR eligibility that changes the sequencing?
+**RESOLVED**
 
-**Impact:** Determines how the Pathway section is structured and whether supporting pathways get mentioned as primary or secondary.
+OTA (Other Transaction Authority) as primary entry point to support rapid prototyping and evaluation. Secondary pathways (BAA, AFFOA) may follow as the concept matures.
+
+- Matches pre-prototype / integration-ready stage exactly
+- Supports rapid prototyping + iteration mandate
+- Most believable in a first conversation with defense stakeholders
+- Does not require overcommitting to a specific program sponsor yet
+- Frame in briefing: OTA first, others mentioned but not leading
+
+Do not hedge this in the briefing. OTA is the path.
 
 ---
 
 ## 4. How technical should the experience feel?
 
-- High technical: material specs, layer diagrams, test standards referenced
-- Mid technical: mechanism explained, specs implied but not detailed
-- Low technical: concept and capability only, no specs
+**RESOLVED**
 
-**Impact:** Determines the vocabulary and visual depth of the briefing.
+Moderately technical. Focus on mechanism and system-level integration — not engineering specifications or performance data.
+
+**Do:**
+- Show how the system works (layered garment diagram, functional zones)
+- Use terms like: barrier layer, thermal regulation, integration, system-level design
+
+**Do not:**
+- Reference material compositions, lab data, or exact performance metrics
+- Use engineering schematic language
+
+Rationale: technical enough to be credible to UA R&D and program stakeholders; accessible enough to maintain control of the room with strategy leaders. Too technical loses the room. Too high-level loses credibility.
 
 ---
 
 ## 5. How detailed should the garment visualization be?
 
-- Schematic / diagram (layer system, protection zones)
-- Rendered concept (realistic garment representation)
-- None (text and model only)
+**RESOLVED**
 
-**Impact:** Determines design and production requirements for the briefing experience.
+Conceptual diagram with labeled functional zones. Clean, high-level visualization showing how layers and functions integrate — no engineering-level detail.
+
+**Visual spec:**
+- Clean garment silhouette
+- 4–5 labeled callouts: protective outer shell, thermal regulation layer, antimicrobial treatment zones, mobility/flex zones
+
+**Avoid:**
+- Cross-section diagrams with heavy detail
+- Anything that looks like CAD or engineering drawings

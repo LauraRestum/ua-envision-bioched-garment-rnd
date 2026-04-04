@@ -13,6 +13,13 @@ Designed for a live meeting with Under Armour and defense R&D stakeholders.
 - No filler, no marketing language
 - Every section should answer: "so what does this mean in practice?"
 
+## Technical Register
+
+Moderately technical — mechanism-level, not engineering-level.
+
+- **Use:** barrier layer, thermal regulation layer, antimicrobial treatment, system-level integration, multi-layer construction, protective outer shell, mobility/flex zones
+- **Do not use:** material compositions, lab data, performance specifications, engineering tolerances
+
 See [Constraints](constraints.md) for full do/don't rules.
 
 ---
@@ -58,6 +65,8 @@ Goal: make this concrete. A specific system solving a specific tradeoff problem 
 
 **Current stage:**
 > Pre-prototype / integration-ready. Material innovation exists. What's missing is rapid integration into a functional, testable garment system — that's what this model delivers.
+
+**Visualization:** Conceptual diagram with labeled functional zones — clean garment silhouette with 4–5 callouts (protective outer shell, thermal regulation layer, antimicrobial treatment zones, mobility/flex zones). No engineering schematics.
 
 The Use Case section should make clear: this isn't hypothetical. The materials exist. The gap is integration and speed.
 

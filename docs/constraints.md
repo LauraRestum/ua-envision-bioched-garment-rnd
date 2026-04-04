@@ -12,6 +12,8 @@ Rules for all content produced in this project — briefing copy, supporting doc
 - Add filler text that restates what was already said
 - Make claims that aren't grounded in a specific mechanism or fact
 - Lead with brand prestige — lead with function
+- Reference material compositions, lab data, or engineering specifications — stay at mechanism level
+- Use engineering schematic visuals — keep diagrams conceptual and labeled
 
 ## Do
 
@@ -21,6 +23,7 @@ Rules for all content produced in this project — briefing copy, supporting doc
 - Prioritize clarity over design polish
 - Write at the level of a defense acquisitions professional who has heard many pitches
 - Challenge assumptions (especially UA capabilities) where they're inferred, not confirmed
+- Use mechanism-level vocabulary: barrier layer, thermal regulation, system integration, multi-layer construction, antimicrobial treatment, mobility/flex zones
 
 ---
 
