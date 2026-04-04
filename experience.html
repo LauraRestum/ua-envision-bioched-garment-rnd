@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UA × Envision — Bio/Chem Garment R&D Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     /* ── Reset ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,7 +26,7 @@
       overflow: hidden;
       background: var(--navy);
       color: var(--white);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     }
 
     /* ── Global background fabric texture ── */
@@ -669,6 +671,28 @@
     #s6.entered .cta-btn {
       animation: fadeUp 0.45s ease-out 0.5s forwards;
     }
+
+    /* ── Image fallbacks — when no image file is present ── */
+    img { color: transparent; } /* hide broken-image alt text */
+    img.img-failed { opacity: 0 !important; animation: none !important; }
+
+    /* Placeholder backgrounds on image containers */
+    #s1 .image-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      min-height: 360px;
+    }
+    #s2 .image-col,
+    #s3 .image-col {
+      background: rgba(255,255,255,0.03);
+      border-right: 1px solid var(--border);
+    }
+    #s4 .image-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      min-height: 300px;
+    }
+    /* S5 and S6 fallback gracefully — navy bg already covers it */
   </style>
 </head>
 <body>
@@ -687,7 +711,7 @@
     </div>
     <!-- Image block — right column -->
     <div class="image-block">
-      <img src="images/hero-jacket.jpg" class="jacket-hero" alt="Bio/Chem Protective Jacket">
+      <img src="images/hero-jacket.jpg" class="jacket-hero" alt="Bio/Chem Protective Jacket" onerror="this.classList.add('img-failed')">
     </div>
   </div>
 
@@ -698,7 +722,7 @@
   <div class="slide" id="s2">
     <!-- Image column — full-bleed left -->
     <div class="image-col">
-      <img src="images/material-layers.jpg" class="material-img" alt="Material layers cross-section">
+      <img src="images/material-layers.jpg" class="material-img" alt="Material layers cross-section" onerror="this.classList.add('img-failed')">
     </div>
     <!-- Text column — right -->
     <div class="text-col">
@@ -728,7 +752,7 @@
   <div class="slide" id="s3">
     <!-- Image column — left 40% -->
     <div class="image-col">
-      <img src="images/construction.jpg" class="construction-img" alt="Construction and integration detail">
+      <img src="images/construction.jpg" class="construction-img" alt="Construction and integration detail" onerror="this.classList.add('img-failed')">
     </div>
     <!-- Text column — right -->
     <div class="text-col">
@@ -762,7 +786,7 @@
   <div class="slide" id="s4">
     <!-- Jacket image — left column -->
     <div class="image-block">
-      <img src="images/hero-jacket.jpg" alt="Performance zones — annotated jacket">
+      <img src="images/hero-jacket.jpg" alt="Performance zones — annotated jacket" onerror="this.classList.add('img-failed')">
     </div>
     <!-- Zone text — right column -->
     <div class="text-block">
@@ -823,7 +847,7 @@
   ══════════════════════════════════════ -->
   <div class="slide" id="s6">
     <!-- Small faded jacket image — decorative top -->
-    <img src="images/hero-jacket.jpg" class="s6-jacket" alt="" aria-hidden="true">
+    <img src="images/hero-jacket.jpg" class="s6-jacket" alt="" aria-hidden="true" onerror="this.classList.add('img-failed')">
     <!-- Centered content block -->
     <div class="s6-content">
       <div class="eyebrow">What now</div>
