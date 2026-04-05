@@ -226,12 +226,10 @@
       max-height: 70vh;
       object-fit: contain;
       display: block;
-      opacity: 0;
     }
-    /* Float animation — applied via JS after enter animations complete */
+    /* Float animation — applied via JS after slide enters */
     .jacket-float {
-      animation: float 6s ease-in-out infinite !important;
-      opacity: 1 !important;
+      animation: float 6s ease-in-out infinite;
     }
 
     /* S1 child elements start invisible; .entered fires animations */
@@ -251,10 +249,6 @@
     }
     #s1.entered .body-text {
       animation: fadeUp 0.45s ease-out 0.1s forwards;
-    }
-    /* Jacket fades in on entered, float starts after via JS */
-    #s1.entered .jacket-hero:not(.jacket-float) {
-      animation: fadeIn 0.5s ease-out 0.05s forwards;
     }
 
     /* ══════════════════════════════════════
@@ -277,11 +271,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      /* clip-path reveal animation starts hidden */
-      clip-path: inset(0 0 100% 0);
-    }
-    #s2.entered .material-img {
-      animation: revealDown 0.6s ease-out 0s forwards;
     }
     #s2 .text-col {
       flex: 0 0 45%;
@@ -359,11 +348,6 @@
       object-fit: cover;
       object-position: center;
       display: block;
-      opacity: 0;
-      transform: translateX(-12px);
-    }
-    #s3.entered .construction-img {
-      animation: s3ImgIn 0.5s ease-out 0s forwards;
     }
     #s3 .text-col {
       flex: 1;
@@ -435,10 +419,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 0;
-    }
-    #s4.entered .image-block {
-      animation: fadeIn 0.5s ease-out 0s forwards;
     }
     #s4 .image-block img {
       max-height: 65vh;
@@ -578,11 +558,7 @@
       object-fit: contain;
       display: block;
       margin-bottom: 36px;
-      opacity: 0;
-    }
-    #s6.entered .s6-jacket {
-      animation: fadeIn 0.5s ease-out 0s forwards;
-      /* After fadeIn, hold at 0.4 opacity via filter not opacity */
+      opacity: 0.4;
     }
     .s6-content {
       display: flex;
@@ -672,9 +648,8 @@
       animation: fadeUp 0.45s ease-out 0.5s forwards;
     }
 
-    /* ── Image fallbacks — when no image file is present ── */
-    img { color: transparent; } /* hide broken-image alt text */
-    img.img-failed { opacity: 0 !important; animation: none !important; }
+    /* Hide broken-image alt text */
+    img { color: transparent; }
 
     /* Placeholder backgrounds on image containers */
     #s1 .image-block {
@@ -711,7 +686,7 @@
     </div>
     <!-- Image block — right column -->
     <div class="image-block">
-      <img src="images/hero-jacket.png" class="jacket-hero" alt="Bio/Chem Protective Jacket" onerror="this.classList.add('img-failed')">
+      <img src="images/hero-jacket.png" class="jacket-hero" alt="Bio/Chem Protective Jacket">
     </div>
   </div>
 
@@ -722,7 +697,7 @@
   <div class="slide" id="s2">
     <!-- Image column — full-bleed left -->
     <div class="image-col">
-      <img src="images/material-layers.jpg" class="material-img" alt="Material layers cross-section" onerror="this.classList.add('img-failed')">
+      <img src="images/material-layers.jpg" class="material-img" alt="Material layers cross-section">
     </div>
     <!-- Text column — right -->
     <div class="text-col">
@@ -752,7 +727,7 @@
   <div class="slide" id="s3">
     <!-- Image column — left 40% -->
     <div class="image-col">
-      <img src="images/construction.jpg" class="construction-img" alt="Construction and integration detail" onerror="this.classList.add('img-failed')">
+      <img src="images/construction.jpg" class="construction-img" alt="Construction and integration detail">
     </div>
     <!-- Text column — right -->
     <div class="text-col">
@@ -786,7 +761,7 @@
   <div class="slide" id="s4">
     <!-- Jacket image — left column -->
     <div class="image-block">
-      <img src="images/hero-jacket.png" alt="Performance zones — annotated jacket" onerror="this.classList.add('img-failed')">
+      <img src="images/hero-jacket.png" alt="Performance zones — annotated jacket">
     </div>
     <!-- Zone text — right column -->
     <div class="text-block">
@@ -847,7 +822,7 @@
   ══════════════════════════════════════ -->
   <div class="slide" id="s6">
     <!-- Small faded jacket image — decorative top -->
-    <img src="images/hero-jacket.png" class="s6-jacket" alt="" aria-hidden="true" onerror="this.classList.add('img-failed')">
+    <img src="images/hero-jacket.png" class="s6-jacket" alt="" aria-hidden="true">
     <!-- Centered content block -->
     <div class="s6-content">
       <div class="eyebrow">What now</div>
@@ -914,13 +889,6 @@
           }
         }
 
-        // S6: set jacket to 40% opacity after fadeIn animation completes
-        if (n === 6) {
-          const s6Jacket = el.querySelector('.s6-jacket');
-          if (s6Jacket) {
-            setTimeout(() => { s6Jacket.style.opacity = '0.4'; }, 520);
-          }
-        }
       }));
     }
 
@@ -932,10 +900,6 @@
       // Remove float from S1 jacket
       const jacket = el.querySelector('.jacket-hero');
       if (jacket) jacket.classList.remove('jacket-float');
-
-      // Reset S6 jacket opacity
-      const s6Jacket = el.querySelector('.s6-jacket');
-      if (s6Jacket) s6Jacket.style.opacity = '';
     }
 
     // Navigate by delta (+1 forward, -1 back)
@@ -977,14 +941,7 @@
     });
 
     // ── Init: activate S1 on load ──
-    document.getElementById('s1').classList.add('active');
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      document.getElementById('s1').classList.add('entered');
-      const jacket = document.querySelector('#s1 .jacket-hero');
-      if (jacket) {
-        setTimeout(() => jacket.classList.add('jacket-float'), 550);
-      }
-    }));
+    activateSlide(1);
     updateNav();
   </script>
 </body>
