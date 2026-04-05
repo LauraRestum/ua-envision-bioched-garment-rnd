@@ -82,7 +82,7 @@
     .slide-content.reverse { flex-direction: row-reverse; }
     .text-block  { flex: 1; min-width: 0; }
     .visual-block {
-      flex: 1; min-width: 0;
+      flex: 1.1; min-width: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -143,45 +143,45 @@
     }
 
     /* ── Slide 4: Zone list ── */
-    .zone-list { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 420px; }
+    .zone-list { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 480px; }
     .zone-item {
-      display: flex; align-items: flex-start; gap: 14px;
-      padding: 16px 20px;
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 18px 22px;
       border: 1px solid var(--border);
       background: var(--surface);
     }
     .zone-dot {
-      width: 8px; height: 8px; border-radius: 50%;
+      width: 9px; height: 9px; border-radius: 50%;
       background: var(--accent);
       margin-top: 5px; flex-shrink: 0;
     }
-    .zone-name { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
-    .zone-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .zone-name { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 5px; }
+    .zone-desc { font-size: 14px; color: var(--muted); line-height: 1.5; }
 
     /* ── Slide 6: Reason list ── */
-    .reason-list { display: flex; flex-direction: column; width: 100%; max-width: 440px; }
-    .reason-item { padding: 22px 0; border-bottom: 1px solid var(--border); }
+    .reason-list { display: flex; flex-direction: column; width: 100%; max-width: 480px; }
+    .reason-item { padding: 24px 0; border-bottom: 1px solid var(--border); }
     .reason-item:first-child { border-top: 1px solid var(--border); }
     .reason-title {
-      font-size: 11px; font-weight: 700;
+      font-size: 12px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 2px;
-      color: var(--white); margin-bottom: 8px;
+      color: var(--white); margin-bottom: 10px;
     }
-    .reason-body { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .reason-body { font-size: 15px; color: var(--muted); line-height: 1.65; }
 
     /* ── Slide 7: Action list ── */
-    .action-list { display: flex; flex-direction: column; width: 100%; max-width: 440px; }
+    .action-list { display: flex; flex-direction: column; width: 100%; max-width: 480px; }
     .action-item {
       display: flex; align-items: flex-start; gap: 20px;
-      padding: 20px 0; border-bottom: 1px solid var(--border);
+      padding: 22px 0; border-bottom: 1px solid var(--border);
     }
     .action-item:first-child { border-top: 1px solid var(--border); }
     .action-num {
-      font-size: 11px; font-weight: 700;
+      font-size: 12px; font-weight: 700;
       color: var(--accent); letter-spacing: 1px;
-      width: 20px; flex-shrink: 0; padding-top: 2px;
+      width: 24px; flex-shrink: 0; padding-top: 2px;
     }
-    .action-text { font-size: 15px; color: var(--white); line-height: 1.55; }
+    .action-text { font-size: 16px; color: var(--white); line-height: 1.6; }
   </style>
 </head>
 <body>
@@ -201,33 +201,32 @@
         <p class="body-text">Under Armour develops the materials. Envision integrates them into functional garment systems. The government funds and evaluates through OTA. That's the model.</p>
       </div>
       <div class="visual-block">
-        <svg width="420" height="240" viewBox="0 0 420 240" fill="none">
+        <svg width="100%" viewBox="0 0 560 140" fill="none" style="max-width:560px">
           <!-- UA -->
-          <rect x="0" y="80" width="115" height="64" rx="2"
-                stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
-          <text x="57" y="108" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Under Armour</text>
-          <text x="57" y="126" text-anchor="middle" font-size="10" fill="#7A96A5">Material Innovation</text>
+          <rect x="0" y="10" width="160" height="80" rx="2"
+                stroke="rgba(255,255,255,0.18)" stroke-width="1.5" fill="rgba(255,255,255,0.04)"/>
+          <text x="80" y="48" text-anchor="middle" font-size="16" font-weight="700" fill="#FFFFFF">Under Armour</text>
+          <text x="80" y="70" text-anchor="middle" font-size="13" fill="#7A96A5">Material Innovation</text>
 
           <!-- Arrow 1 -->
-          <line x1="115" y1="112" x2="148" y2="112" stroke="#78BE21" stroke-width="1.5"/>
-          <polygon points="148,107 158,112 148,117" fill="#78BE21"/>
+          <line x1="160" y1="50" x2="193" y2="50" stroke="#78BE21" stroke-width="1.5"/>
+          <polygon points="193,45 203,50 193,55" fill="#78BE21"/>
 
           <!-- Envision (highlighted) -->
-          <rect x="158" y="80" width="115" height="64" rx="2"
-                stroke="#78BE21" stroke-width="1" fill="rgba(120,190,33,0.06)"/>
-          <text x="215" y="108" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Envision</text>
-          <text x="215" y="126" text-anchor="middle" font-size="10" fill="#7A96A5">Integration + Prototyping</text>
+          <rect x="203" y="10" width="160" height="80" rx="2"
+                stroke="#78BE21" stroke-width="1.5" fill="rgba(120,190,33,0.06)"/>
+          <text x="283" y="48" text-anchor="middle" font-size="16" font-weight="700" fill="#FFFFFF">Envision</text>
+          <text x="283" y="70" text-anchor="middle" font-size="13" fill="#7A96A5">Integration + Prototyping</text>
 
           <!-- Arrow 2 -->
-          <line x1="273" y1="112" x2="306" y2="112" stroke="#78BE21" stroke-width="1.5"/>
-          <polygon points="306,107 316,112 306,117" fill="#78BE21"/>
+          <line x1="363" y1="50" x2="396" y2="50" stroke="#78BE21" stroke-width="1.5"/>
+          <polygon points="396,45 406,50 396,55" fill="#78BE21"/>
 
           <!-- DEVCOM -->
-          <rect x="316" y="80" width="104" height="64" rx="2"
-                stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
-          <text x="368" y="108" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">DEVCOM</text>
-          <text x="368" y="126" text-anchor="middle" font-size="10" fill="#7A96A5">Funding + Evaluation</text>
-
+          <rect x="406" y="10" width="154" height="80" rx="2"
+                stroke="rgba(255,255,255,0.18)" stroke-width="1.5" fill="rgba(255,255,255,0.04)"/>
+          <text x="483" y="48" text-anchor="middle" font-size="16" font-weight="700" fill="#FFFFFF">DEVCOM</text>
+          <text x="483" y="70" text-anchor="middle" font-size="13" fill="#7A96A5">Funding + Evaluation</text>
         </svg>
       </div>
     </div>
@@ -250,24 +249,25 @@
         <p class="body-text">The gap between what's possible in the lab and what gets deployed in the field is wide — and closes slowly.</p>
       </div>
       <div class="visual-block">
-        <svg width="380" height="260" viewBox="0 0 380 260" fill="none">
+        <svg width="100%" viewBox="0 0 500 290" fill="none" style="max-width:500px">
           <!-- Tension 1 -->
-          <text x="0" y="22" font-size="12" font-weight="600" fill="#FFFFFF">Protection vs. Mobility</text>
-          <rect x="0" y="32" width="380" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-          <rect x="0" y="32" width="210" height="3" rx="1.5" fill="#78BE21"/>
-          <text x="0" y="52" font-size="11" fill="#7A96A5">Higher protection increases weight and restricts movement</text>
+          <text x="0" y="22" font-size="15" font-weight="600" fill="#FFFFFF">Protection vs. Mobility</text>
+          <rect x="0" y="34" width="500" height="4" rx="2" fill="rgba(255,255,255,0.07)"/>
+          <rect x="0" y="34" width="280" height="4" rx="2" fill="#78BE21"/>
+          <text x="0" y="58" font-size="13" fill="#7A96A5">Higher protection increases weight and restricts movement</text>
 
           <!-- Tension 2 -->
-          <text x="0" y="96" font-size="12" font-weight="600" fill="#FFFFFF">Iteration Speed</text>
-          <rect x="0" y="106" width="380" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-          <rect x="0" y="106" width="80" height="3" rx="1.5" fill="#78BE21"/>
-          <text x="0" y="126" font-size="11" fill="#7A96A5">Development pipelines are not built for rapid prototyping</text>
+          <text x="0" y="110" font-size="15" font-weight="600" fill="#FFFFFF">Iteration Speed</text>
+          <rect x="0" y="122" width="500" height="4" rx="2" fill="rgba(255,255,255,0.07)"/>
+          <rect x="0" y="122" width="105" height="4" rx="2" fill="#78BE21"/>
+          <text x="0" y="146" font-size="13" fill="#7A96A5">Development pipelines are not built for rapid prototyping</text>
 
           <!-- Tension 3 -->
-          <text x="0" y="170" font-size="12" font-weight="600" fill="#FFFFFF">Material → Deployment Gap</text>
-          <rect x="0" y="180" width="380" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-          <rect x="0" y="180" width="40" height="3" rx="1.5" fill="#78BE21"/>
-          <text x="0" y="200" font-size="11" fill="#7A96A5">Advanced materials exist without a path into a manufacturable system</text>
+          <text x="0" y="198" font-size="15" font-weight="600" fill="#FFFFFF">Material → Deployment Gap</text>
+          <rect x="0" y="210" width="500" height="4" rx="2" fill="rgba(255,255,255,0.07)"/>
+          <rect x="0" y="210" width="52" height="4" rx="2" fill="#78BE21"/>
+          <text x="0" y="234" font-size="13" fill="#7A96A5">Advanced materials exist without a path</text>
+          <text x="0" y="254" font-size="13" fill="#7A96A5">into a manufacturable system</text>
         </svg>
       </div>
     </div>
@@ -290,35 +290,35 @@
         <p class="body-text">The system works because the roles don't overlap — and the gaps between them are closed by design.</p>
       </div>
       <div class="visual-block">
-        <svg width="300" height="330" viewBox="0 0 300 330" fill="none">
+        <svg width="100%" viewBox="0 0 380 460" fill="none" style="max-width:380px">
           <!-- UA box -->
-          <rect x="50" y="0" width="200" height="76" rx="2"
-                stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
-          <text x="150" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Under Armour</text>
-          <text x="150" y="42" text-anchor="middle" font-size="10" fill="#7A96A5">Thermal regulation · Antimicrobial fabrics</text>
-          <text x="150" y="58" text-anchor="middle" font-size="10" fill="#7A96A5">Performance layering · Wearable integration</text>
+          <rect x="30" y="0" width="320" height="100" rx="2"
+                stroke="rgba(255,255,255,0.18)" stroke-width="1.5" fill="rgba(255,255,255,0.04)"/>
+          <text x="190" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#FFFFFF">Under Armour</text>
+          <text x="190" y="56" text-anchor="middle" font-size="13" fill="#7A96A5">Thermal regulation · Antimicrobial fabrics</text>
+          <text x="190" y="74" text-anchor="middle" font-size="13" fill="#7A96A5">Performance layering · Wearable integration</text>
 
           <!-- Connector 1 -->
-          <line x1="150" y1="76" x2="150" y2="108" stroke="#78BE21" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <polygon points="145,108 150,118 155,108" fill="#78BE21"/>
+          <line x1="190" y1="100" x2="190" y2="140" stroke="#78BE21" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <polygon points="185,140 190,152 195,140" fill="#78BE21"/>
 
           <!-- Envision box (highlighted) -->
-          <rect x="50" y="118" width="200" height="76" rx="2"
-                stroke="#78BE21" stroke-width="1" fill="rgba(120,190,33,0.06)"/>
-          <text x="150" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">Envision</text>
-          <text x="150" y="160" text-anchor="middle" font-size="10" fill="#7A96A5">Rapid prototyping · Garment integration</text>
-          <text x="150" y="176" text-anchor="middle" font-size="10" fill="#7A96A5">Small-batch pilot manufacturing</text>
+          <rect x="30" y="152" width="320" height="100" rx="2"
+                stroke="#78BE21" stroke-width="1.5" fill="rgba(120,190,33,0.06)"/>
+          <text x="190" y="184" text-anchor="middle" font-size="17" font-weight="700" fill="#FFFFFF">Envision</text>
+          <text x="190" y="208" text-anchor="middle" font-size="13" fill="#7A96A5">Rapid prototyping · Garment integration</text>
+          <text x="190" y="226" text-anchor="middle" font-size="13" fill="#7A96A5">Small-batch pilot manufacturing</text>
 
           <!-- Connector 2 -->
-          <line x1="150" y1="194" x2="150" y2="226" stroke="#78BE21" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <polygon points="145,226 150,236 155,226" fill="#78BE21"/>
+          <line x1="190" y1="252" x2="190" y2="292" stroke="#78BE21" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <polygon points="185,292 190,304 195,292" fill="#78BE21"/>
 
           <!-- DEVCOM box -->
-          <rect x="50" y="236" width="200" height="76" rx="2"
-                stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
-          <text x="150" y="260" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">DEVCOM</text>
-          <text x="150" y="278" text-anchor="middle" font-size="10" fill="#7A96A5">OTA funding · Performance evaluation</text>
-          <text x="150" y="294" text-anchor="middle" font-size="10" fill="#7A96A5">Scalability + risk assessment</text>
+          <rect x="30" y="304" width="320" height="100" rx="2"
+                stroke="rgba(255,255,255,0.18)" stroke-width="1.5" fill="rgba(255,255,255,0.04)"/>
+          <text x="190" y="336" text-anchor="middle" font-size="17" font-weight="700" fill="#FFFFFF">DEVCOM</text>
+          <text x="190" y="360" text-anchor="middle" font-size="13" fill="#7A96A5">OTA funding · Performance evaluation</text>
+          <text x="190" y="378" text-anchor="middle" font-size="13" fill="#7A96A5">Scalability + risk assessment</text>
         </svg>
       </div>
     </div>
@@ -393,44 +393,44 @@
         <p class="body-text">The concept is integration-ready — not raw research — which fits OTA's mandate directly. Envision builds the functional garment system. DEVCOM evaluates against defined requirements. Pilot manufacturing follows.</p>
       </div>
       <div class="visual-block">
-        <svg width="400" height="200" viewBox="0 0 400 200" fill="none">
-          <!-- Step 1: OTA Entry (accent) -->
-          <rect x="0" y="20" width="82" height="80" rx="2"
-                stroke="#78BE21" stroke-width="1" fill="rgba(120,190,33,0.06)"/>
-          <text x="41" y="53" text-anchor="middle" font-size="11" font-weight="700" fill="#78BE21" letter-spacing="0.5">OTA</text>
-          <text x="41" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="#78BE21" letter-spacing="0.5">ENTRY</text>
-          <text x="41" y="124" text-anchor="middle" font-size="10" fill="#7A96A5">Pre-prototype</text>
-          <text x="41" y="138" text-anchor="middle" font-size="10" fill="#7A96A5">mandate fits</text>
+        <svg width="100%" viewBox="0 0 540 180" fill="none" style="max-width:540px">
+          <!-- Step 1: OTA Entry -->
+          <rect x="0" y="0" width="112" height="90" rx="2"
+                stroke="#78BE21" stroke-width="1.5" fill="rgba(120,190,33,0.06)"/>
+          <text x="56" y="38" text-anchor="middle" font-size="14" font-weight="700" fill="#78BE21" letter-spacing="1">OTA</text>
+          <text x="56" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#78BE21" letter-spacing="1">ENTRY</text>
+          <text x="56" y="122" text-anchor="middle" font-size="12" fill="#7A96A5">Pre-prototype</text>
+          <text x="56" y="140" text-anchor="middle" font-size="12" fill="#7A96A5">mandate fits</text>
 
-          <line x1="82" y1="60" x2="106" y2="60" stroke="#78BE21" stroke-width="1.5"/>
-          <polygon points="106,55 116,60 106,65" fill="#78BE21"/>
+          <line x1="112" y1="45" x2="138" y2="45" stroke="#78BE21" stroke-width="1.5"/>
+          <polygon points="138,40 148,45 138,50" fill="#78BE21"/>
 
           <!-- Step 2: Prototype -->
-          <rect x="116" y="20" width="82" height="80" rx="2"
-                stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
-          <text x="157" y="62" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">PROTOTYPE</text>
-          <text x="157" y="124" text-anchor="middle" font-size="10" fill="#7A96A5">Envision</text>
-          <text x="157" y="138" text-anchor="middle" font-size="10" fill="#7A96A5">builds system</text>
+          <rect x="148" y="0" width="112" height="90" rx="2"
+                stroke="rgba(255,255,255,0.15)" stroke-width="1.5" fill="rgba(255,255,255,0.04)"/>
+          <text x="204" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">PROTOTYPE</text>
+          <text x="204" y="122" text-anchor="middle" font-size="12" fill="#7A96A5">Envision</text>
+          <text x="204" y="140" text-anchor="middle" font-size="12" fill="#7A96A5">builds system</text>
 
-          <line x1="198" y1="60" x2="222" y2="60" stroke="#78BE21" stroke-width="1.5"/>
-          <polygon points="222,55 232,60 222,65" fill="#78BE21"/>
+          <line x1="260" y1="45" x2="286" y2="45" stroke="#78BE21" stroke-width="1.5"/>
+          <polygon points="286,40 296,45 286,50" fill="#78BE21"/>
 
           <!-- Step 3: Evaluation -->
-          <rect x="232" y="20" width="82" height="80" rx="2"
-                stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
-          <text x="273" y="62" text-anchor="middle" font-size="10" font-weight="700" fill="#FFFFFF">EVALUATION</text>
-          <text x="273" y="124" text-anchor="middle" font-size="10" fill="#7A96A5">DEVCOM</text>
-          <text x="273" y="138" text-anchor="middle" font-size="10" fill="#7A96A5">evaluates</text>
+          <rect x="296" y="0" width="112" height="90" rx="2"
+                stroke="rgba(255,255,255,0.15)" stroke-width="1.5" fill="rgba(255,255,255,0.04)"/>
+          <text x="352" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">EVALUATION</text>
+          <text x="352" y="122" text-anchor="middle" font-size="12" fill="#7A96A5">DEVCOM</text>
+          <text x="352" y="140" text-anchor="middle" font-size="12" fill="#7A96A5">evaluates</text>
 
-          <line x1="314" y1="60" x2="338" y2="60" stroke="#78BE21" stroke-width="1.5"/>
-          <polygon points="338,55 348,60 338,65" fill="#78BE21"/>
+          <line x1="408" y1="45" x2="434" y2="45" stroke="#78BE21" stroke-width="1.5"/>
+          <polygon points="434,40 444,45 434,50" fill="#78BE21"/>
 
           <!-- Step 4: Scale -->
-          <rect x="348" y="20" width="52" height="80" rx="2"
-                stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="rgba(255,255,255,0.04)"/>
-          <text x="374" y="64" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">SCALE</text>
-          <text x="374" y="124" text-anchor="middle" font-size="10" fill="#7A96A5">Pilot mfg</text>
-          <text x="374" y="138" text-anchor="middle" font-size="10" fill="#7A96A5">via Envision</text>
+          <rect x="444" y="0" width="96" height="90" rx="2"
+                stroke="rgba(255,255,255,0.15)" stroke-width="1.5" fill="rgba(255,255,255,0.04)"/>
+          <text x="492" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">SCALE</text>
+          <text x="492" y="122" text-anchor="middle" font-size="12" fill="#7A96A5">Pilot mfg</text>
+          <text x="492" y="140" text-anchor="middle" font-size="12" fill="#7A96A5">via Envision</text>
         </svg>
       </div>
     </div>
